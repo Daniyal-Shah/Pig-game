@@ -1,5 +1,7 @@
 
-var scores=[0,0],
+var scores,roundScore,activePlayer;
+scores=[0,0];
+roundScore=0;
 activePlayer=1;
 
 
@@ -24,20 +26,34 @@ document.querySelector('.btn--new').addEventListener('click', function()
 });
 
 
-
-
 // Adding event listener and work with roll button
 document.querySelector('.btn--roll').addEventListener('click', function()
 {
-  const dice = Math.floor( (Math.random()*6) +1 );
-  const diceImg=  document.querySelector('.dice');
+  var dice = Math.floor(Math.random()*6 )+1;
+  var diceImg=  document.querySelector('.dice');
   diceImg.style.display='block';
-  diceImg.style.src='dice-'+dice +'.png';
+  diceImg.src='dice-'+dice +'.png';
+
+  if (dice !== 1)
+  {
+    roundScore+=dice;
+    document.querySelector('#current--'+activePlayer).textContent=roundScore;
+  }
+  else
+  {
+    document.querySelector('#current--'+activePlayer).textContent=0;
+    document.querySelector('.player--'+activePlayer).classList.remove('player--active');   
+    activePlayer= activePlayer===0 ? activePlayer=1 : activePlayer=0;
+    document.querySelector('.player--'+activePlayer).classList.add('player--active');    
+  }
 
 });
 
+// Adding event listener and work with hold button
+document.querySelector('.btn--hold').addEventListener('click', function()
+{
 
-
+});
 
 
 
