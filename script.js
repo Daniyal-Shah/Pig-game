@@ -2,7 +2,7 @@
 var scores,roundScore,activePlayer;
 scores=[0,0];
 roundScore=0;
-activePlayer=1;
+activePlayer=0;
 
 
 
@@ -23,6 +23,10 @@ document.querySelector('.btn--new').addEventListener('click', function()
   document.querySelector('#current--1').textContent=0;
   document.querySelector('.dice').style.display='none';  
 
+
+  document.querySelector('.btn--hold').style.display='block';
+  document.querySelector('.btn--roll').style.display='block';
+
 });
 
 
@@ -41,6 +45,7 @@ document.querySelector('.btn--roll').addEventListener('click', function()
   }
   else
   {
+    roundScore=0;
     document.querySelector('#current--'+activePlayer).textContent=0;
     document.querySelector('.player--'+activePlayer).classList.remove('player--active');   
     activePlayer= activePlayer===0 ? activePlayer=1 : activePlayer=0;
@@ -52,6 +57,25 @@ document.querySelector('.btn--roll').addEventListener('click', function()
 // Adding event listener and work with hold button
 document.querySelector('.btn--hold').addEventListener('click', function()
 {
+  var holdPlayer= document.querySelector('#score--'+activePlayer);
+  document.querySelector('#score--'+activePlayer).textContent= parseInt(holdPlayer.textContent)  +roundScore;    
+
+
+  if( parseInt(document.querySelector('#score--'+activePlayer).textContent) < 10) 
+  {
+
+    roundScore=0;
+    document.querySelector('#current--'+activePlayer).textContent=0;
+    document.querySelector('.player--'+activePlayer).classList.remove('player--active');   
+    activePlayer= activePlayer===0 ? activePlayer=1 : activePlayer=0;
+    document.querySelector('.player--'+activePlayer).classList.add('player--active');   
+}
+    else
+    {
+      document.getElementById('name--'+activePlayer).textContent='Winner!'; 
+      document.querySelector('.btn--hold').style.display='none';
+      document.querySelector('.btn--roll').style.display='none';
+    }    
 
 });
 
